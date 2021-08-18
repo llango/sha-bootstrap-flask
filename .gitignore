@@ -112,3 +112,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+__pycache__/
+.idea/
+test_email.py
+config.py
