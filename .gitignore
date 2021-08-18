@@ -11,3 +11,4 @@ __pycache__/
 .idea/
 test_email.py
 config.py
+.DS_Store/
