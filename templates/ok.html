@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block header %}
+<div class="container">
+    <div class="header clearfix">
+        <nav>
+            <ul class="nav nav-pills float-right">
+                  <li class="nav-item">
+                        <a class="nav-link" href="/">首页 <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('about') }}">关于</a>
+                  </li>
+                  <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('contact') }}">联系</a>
+                  </li>
+                  <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('service') }}">服务</a>
+                  </li>
+            </ul>
+        </nav>
+        <h3 class="text-muted">Akaros</h3>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1>FLASK-MAIL DEMO</h1>
+    <p>請到你的信箱收信~ ^0^</p>
+    <a href="/index" class="btn btn-info" role="button">回到首頁</a>
+</div>
+{% endblock %}
+

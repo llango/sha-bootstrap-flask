@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <title>{% block title %}A Flask Application{% endblock %}</title>
+
+        <meta name="description" content="a flask bootstrap4 app.">
+        <meta name="author" content="admin@akaros.cn">
+
+        <!--去掉避免打开页面慢-->
+        <!--<link href="https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed" rel="stylesheet">-->
+
+        <link href="static/css/bootstrap.min.css" rel="stylesheet">
+        <link href="static/css/narrow-jumbotron.css" rel="stylesheet">
+
+        {% block style %}{% endblock %}
+        {% block head_script %}{% endblock %}
+    </head>
+
+    <body>
+        <header role="header">
+            {% block header %}
+            {% endblock %}
+        </header>
+
+        <main role="main">
+            {% block main %}
+                <div class="container">
+                    {% block content %}
+
+                    {% endblock %}
+                </div>
+            {% endblock %}
+        </main>
+
+        <footer role="footer">
+            {% block footer %}
+            <div class="footer">
+                <div class="container">
+                    <div>
+                        <p>@copyright: 凉葱落</p>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+        </footer>
+    </body>
+    {% block script %}
+         <script src="static/js/jquery-min.js"></script>
+         <script src="static/js/popper.min.js"></script>
+         <script src="static/js/bootstrap.min.js"></script>
+    {% endblock %}
+</html>

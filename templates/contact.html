@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block header %}
+<div class="container">
+    <div class="header clearfix">
+        <nav>
+            <ul class="nav nav-pills float-right">
+                  <li class="nav-item">
+                        <a class="nav-link" href="/">首页 <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('about') }}">关于</a>
+                  </li>
+                  <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('contact') }}">联系</a>
+                  </li>
+                  <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('service') }}">服务</a>
+                  </li>
+            </ul>
+        </nav>
+        <h3 class="text-muted">Akaros</h3>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1 class="display-3">Hello!</h1>
+    <p class="lead">Welcome to my little site, a small weekend project that involed learning Flask(?) and PaaS or deploying to the cloud. Because of how simplistic it turned out, I decided to make it my personal page. Below are somethings about me.</p>
+    <p><a class="btn btn-outline-info" href="#" role="button">Skip to Resume</a></p>
+</div>
+
+<div class="row marketing">
+  <form action="/send_mail" method="post">
+     <div class="form-group">
+        <label for="email">邮箱：</label>
+        <input type="email" id="email" class="form-control" name="email" placeholder="输入邮箱" required>
+     </div>
+     <button type="submit" class="btn btn-default btn-outline-warning">发送</button>
+  </form>
+</div>
+{% endblock %}
+
