@@ -20,11 +20,9 @@ from flask_script import Manager
 from flask_mail import Mail, Message
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from form import ContactForm
 from threading import Thread
 import config
-from email.mime.text import MIMEText
-import smtplib
+
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
