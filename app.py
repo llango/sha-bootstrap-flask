@@ -10,7 +10,7 @@
 
 __version__ = "0.1"
 __author__ = "罗从良"
-__email__ = "admin@akaros.cn"
+__email__ = "rontomai@gmail.com"
 
 
 import os
@@ -41,7 +41,8 @@ app.config['MAIL_USERNAME'] = 'consult@carf-enna.com'  # 填邮箱
 app.config["MAIL_PASSWORD"] = "ramMFhegq4Q2RXC5"      # 填授权码
 app.config['MAIL_DEFAULT_SENDER'] = 'consult@carf-enna.com'  # 填邮箱，默认发送者
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or 'sqlite:///' + os.path.join(basedir, 'app.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
+    'DATABASE_URL') or 'sqlite:///' + os.path.join(basedir, 'app.db')
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 manager = Manager(app)
@@ -80,6 +81,11 @@ def about():
     return render_template("about.html")
 
 
+@app.route("/service")
+def service():
+    return render_template("service.html")
+
+
 @app.route("/contact")
 def contact():
     # email = request.form['email'].strip()
@@ -116,31 +122,31 @@ def contact():
     #
     # if form.validate_on_submit():
     #     print("ALL OK, SEND EMAIL")
-        # message = "Email: %s -- Message: %s" % (form.email.data, form.message.data)
-        # msg = Message(subject='Hello World',
-        #               sender=form.email.data,  # 需要使用默认发送者则不用填
-        #               recipients=['admin@akaros.cn'])
-        # # 邮件内容会以文本和html两种格式呈现，而你能看到哪种格式取决于你的邮件客户端。
-        # msg.body = form.message.data
-        # msg.html = '<h1>'+form.message.data+'</h1>'
-        # thread = Thread(target=send_async_email, args=[app, msg])
-        # thread.start()
-        # # return '<h1>邮件发送成功</h1>'
-        # # msg = MIMEText(message, 'text')
-        # # msg['Subject'] = config.EMAIL_SUBJECT
-        # # msg['From'] = config.SMTP_USER
-        # # msg['To'] = config.SMTP_USER
-        # # smtp = None
-        # # if config.SMTP_TLS:
-        # #     smtp = smtplib.SMTP_SSL(config.SMTP_HOST, config.SMTP_PORT)
-        # # else:
-        # #     smtp = smtplib.SMTP(config.SMTP_HOST, config.SMTP_PORT)
-        # # smtp.login(config.SMTP_USER, config.SMTP_PASS)
-        # # smtp.login(config.SMTP_USER, config.SMTP_PASS)
-        # # smtp.sendmail(config.SMTP_USER, [config.SMTP_USER], msg.as_string())
-        # # flash("完成了发送！")
-        # # smtp.quit()
-        # return redirect(url_for('index'))
+    # message = "Email: %s -- Message: %s" % (form.email.data, form.message.data)
+    # msg = Message(subject='Hello World',
+    #               sender=form.email.data,  # 需要使用默认发送者则不用填
+    #               recipients=['admin@akaros.cn'])
+    # # 邮件内容会以文本和html两种格式呈现，而你能看到哪种格式取决于你的邮件客户端。
+    # msg.body = form.message.data
+    # msg.html = '<h1>'+form.message.data+'</h1>'
+    # thread = Thread(target=send_async_email, args=[app, msg])
+    # thread.start()
+    # # return '<h1>邮件发送成功</h1>'
+    # # msg = MIMEText(message, 'text')
+    # # msg['Subject'] = config.EMAIL_SUBJECT
+    # # msg['From'] = config.SMTP_USER
+    # # msg['To'] = config.SMTP_USER
+    # # smtp = None
+    # # if config.SMTP_TLS:
+    # #     smtp = smtplib.SMTP_SSL(config.SMTP_HOST, config.SMTP_PORT)
+    # # else:
+    # #     smtp = smtplib.SMTP(config.SMTP_HOST, config.SMTP_PORT)
+    # # smtp.login(config.SMTP_USER, config.SMTP_PASS)
+    # # smtp.login(config.SMTP_USER, config.SMTP_PASS)
+    # # smtp.sendmail(config.SMTP_USER, [config.SMTP_USER], msg.as_string())
+    # # flash("完成了发送！")
+    # # smtp.quit()
+    # return redirect(url_for('index'))
     # return render_template("contact.html")
 
 
@@ -200,11 +206,56 @@ def bulk_emails():
     return "請到你的信箱收信~ ^0^"
 
 
-@app.route("/service")
-def service():
-    return render_template("service.html")
+# 发送纯文本
+@app.route("/email_send_txt")
+def email_send_txt():
+    message = Message(subject='hello world',
+                      recipients=['724261350@qq.com'], body='测试代码')
+    try:
+        mail.send(message)
+        return '发送成功，请注意查收~'
+    except Exception as e:
+        print(e)
+        return '发送失败'
+
+
+# 发送html
+@app.route('/email_send_html/')
+def email_send_html():
+    message = Message(subject='hello world',
+                      recipients=['724261350@qq.com'])
+    try:
+        # 发送渲染一个模板
+        message.html = render_template('email.html')
+        mail.send(message)
+        return '发送成功，请注意查收~'
+    except Exception as e:
+        print(e)
+        return '发送失败'
+
+
+# 发送附件的邮件
+@app.route('/email_send_attach/')
+def email_send_attach():
+    message = Message(subject='hello flask-mail',
+                      recipients=['724261350@qq.com'], body='附件邮件')
+    try:
+        # message.attach邮件附件添加
+        # 方法attach(self,
+        #        filename=None,
+        #        content_type=None,
+        #        data=None,
+        #        disposition=None,
+        #        headers=None):
+
+        with open("/static/images/image.jpg", 'rb') as fp:
+            message.attach("image.jpg", "image/jpg", fp.read())
+        mail.send(message)
+        return '发送成功，请注意查收~'
+    except Exception as e:
+        print(e)
+        return '发送失败'
 
 
 if __name__ == '__main__':
     manager.run()
-
